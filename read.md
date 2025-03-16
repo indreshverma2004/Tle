@@ -9,12 +9,14 @@
 6. [Authentication](#authentication)
 7. [Bookmarking System](#bookmarking-system)
 8. [YouTube Links Integration](#youtube-links-integration)
+9. [Web Scraping](#web-scraping)
 
 ## Tech Stack
 
 This application is built using the following technologies:
 
-- **Frontend Framework**: React (with TypeScript)
+### Frontend:
+- **Framework**: React (with TypeScript)
 - **Build Tool**: Vite
 - **Styling**: Tailwind CSS
 - **UI Component Library**: shadcn/ui (based on Radix UI)
@@ -23,6 +25,13 @@ This application is built using the following technologies:
 - **HTTP Client**: Native fetch API
 - **Date Handling**: Date manipulation utilities
 - **Cookie Management**: js-cookie
+
+### Backend:
+- **Runtime**: Node.js
+- **Framework**: Express.js
+- **Database**: MongoDB (via Mongoose)
+- **Authentication**: JSON Web Token (JWT)
+- **Scraping**: Cheerio & Puppeteer for extracting contest data
 
 ## Application Flow
 
@@ -51,21 +60,16 @@ This application is built using the following technologies:
 ## Key Components
 
 1. **App.tsx**: The main entry point that sets up routing and maintains global state.
-
 2. **Index.jsx**: The contests page that fetches and displays programming contests from different platforms.
-
 3. **ContestList.tsx**: Renders a list of contests with platform-specific components.
-
 4. **FilterBar.tsx**: Allows users to filter contests by platform, status, and search query.
-
 5. **BookmarkedContests.tsx**: Displays contests that users have bookmarked.
-
 6. **Login.tsx & Signup.tsx**: Authentication pages.
-
 7. **AddYoutube.jsx**: Admin interface to add YouTube links to contests.
 
 ## File Structure
 
+### Frontend:
 - `src/`
   - `components/`: UI components
     - `ui/`: shadcn/ui components
@@ -75,6 +79,27 @@ This application is built using the following technologies:
   - `utils/`: Utility functions and types
   - `services/`: API service functions
 
+### Backend:
+- `backend/`
+  - `.gitignore`
+  - `debug.png`
+  - `dp.js`
+  - `index.js` (Main entry point for the backend)
+  - `package.json`
+  - `package-lock.json`
+  - `middleware/`
+    - `fetchuser.js` (Middleware for authentication)
+  - `models/`
+    - `auth.js` (User authentication schema)
+    - `links.js` (Schema for storing YouTube links)
+  - `routes/`
+    - `auth.js` (Authentication routes)
+    - `codechefpast.js` (CodeChef past contests API)
+    - `codchefupcooming.js` (CodeChef upcoming contests API)
+    - `contest.js` (Main contest fetching API)
+    - `leetcodepast.js` (LeetCode past contests API)
+    - `leetcode_upcomming_contest.js` (LeetCode upcoming contests API)
+
 ## API Integration
 
 The application integrates with backend APIs to fetch contest data from three programming platforms:
@@ -83,7 +108,7 @@ The application integrates with backend APIs to fetch contest data from three pr
 2. **LeetCode**
 3. **CodeChef**
 
-API endpoints are defined in the `API_URLS` object in the Index component:
+API endpoints are defined in the `API_URLS` object in the frontend:
 
 ```javascript
 const API_URLS = {
@@ -97,40 +122,39 @@ const API_URLS = {
 
 The application uses token-based authentication:
 
-1. Users register or login through the Signup/Login pages
-2. On successful authentication, a token is stored in localStorage
-3. The token is used in API requests that require authentication (e.g., bookmarking contests)
+1. Users register or login through the Signup/Login pages.
+2. On successful authentication, a token is stored in `localStorage`.
+3. The token is used in API requests that require authentication (e.g., bookmarking contests).
 
 ## Bookmarking System
 
 Users can bookmark contests they are interested in:
 
-1. The bookmark action requires authentication
-2. Bookmarked contests are stored on the server via the API
-3. Bookmarks are also cached locally in localStorage
-4. The BookmarkedContests page displays all bookmarked contests
+1. The bookmark action requires authentication.
+2. Bookmarked contests are stored on the server via the API.
+3. Bookmarks are also cached locally in `localStorage`.
+4. The `BookmarkedContests` page displays all bookmarked contests.
 
 ## YouTube Links Integration
 
 The application supports adding YouTube links to contests (likely tutorial videos or editorial discussions):
 
-1. Admin users can access the AddYoutube page (protected route)
-2. YouTube links can be added to specific contests
-3. When contests are displayed, their YouTube links (if available) are shown alongside other information
+1. Admin users can access the `AddYoutube` page (protected route).
+2. YouTube links can be added to specific contests.
+3. When contests are displayed, their YouTube links (if available) are shown alongside other information.
 
-## Data Flow
+## Web Scraping
 
-1. **Data Fetching**:
-   - Contest data is fetched from backend APIs
-   - YouTube links are fetched separately and merged with contest data
-   - Data is cached in localStorage for performance
+The application scrapes data from competitive programming websites using **Cheerio** and **Puppeteer**:
 
-2. **State Management**:
-   - Contest data is stored in component state
-   - Filters are applied to the data before rendering
-   - Bookmarks are synchronized between server and local storage
+1. **Cheerio** is used for parsing HTML and extracting structured contest data.
+2. **Puppeteer** is used for headless browsing when JavaScript rendering is required.
+3. The scraping scripts fetch data from:
+   - CodeForces
+   - LeetCode
+   - CodeChef
+4. The extracted data is stored in MongoDB and served through the backend API.
 
-3. **Rendering**:
-   - Platform-specific components render contest data
-   - Loading states handle asynchronous operations
-   - Error handling provides feedback on API failures
+This ensures that users always have up-to-date contest information in the application.
+
+

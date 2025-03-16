@@ -31,7 +31,7 @@ This application is built using the following technologies:
 - **Framework**: Express.js
 - **Database**: MongoDB (via Mongoose)
 - **Authentication**: JSON Web Token (JWT)
-- **Scraping**: Cheerio & Puppeteer for extracting contest data
+- **Scraping**: Puppeteer for extracting contest data
 
 ## Application Flow
 
@@ -147,13 +147,12 @@ The application supports adding YouTube links to contests (likely tutorial video
 
 The application scrapes data from competitive programming websites using **Cheerio** and **Puppeteer**:
 
-1. **Cheerio** is used for parsing HTML and extracting structured contest data.
-2. **Puppeteer** is used for headless browsing when JavaScript rendering is required.
-3. The scraping scripts fetch data from:
+1. **Puppeteer** is used for headless browsing when JavaScript rendering is required.
+2. The scraping scripts fetch data from:
    - CodeForces
    - LeetCode
    - CodeChef
-4. The extracted data is stored in MongoDB and served through the backend API.
+3. The extracted data is stored in MongoDB and served through the backend API.
 
 This ensures that users always have up-to-date contest information in the application.
 

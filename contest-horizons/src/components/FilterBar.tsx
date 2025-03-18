@@ -1,4 +1,3 @@
-
 import { useState, useEffect } from "react";
 import { SearchIcon, FilterIcon, X } from "lucide-react";
 import { Card } from "@/components/ui/card";
@@ -57,15 +56,15 @@ const FilterBar = ({ filters, setFilters }: FilterBarProps) => {
     filters.searchQuery;
 
   return (
-    <Card className="p-4 mb-6">
+    <Card className="p-4 mb-6 bg-black text-white">
       <div className="space-y-4">
         <div className="relative">
           <div className="absolute inset-y-0 left-0 pl-3 flex items-center pointer-events-none">
-            <SearchIcon className="h-5 w-5 text-gray-400" />
+            <SearchIcon className="h-5 w-5 text-yellow-400" />
           </div>
           <input
             type="text"
-            className="pl-10 w-full h-10 bg-white dark:bg-gray-800 border border-gray-300 dark:border-gray-600 rounded-lg shadow-sm focus:outline-none focus:ring-2 focus:ring-primary focus:border-transparent"
+            className="pl-10 w-full h-10 bg-gray-800 text-yellow-400 border border-gray-600 rounded-lg focus:outline-none focus:ring-2 focus:ring-yellow-400"
             placeholder="Search contests..."
             value={searchQuery}
             onChange={(e) => setSearchQuery(e.target.value)}
@@ -75,29 +74,25 @@ const FilterBar = ({ filters, setFilters }: FilterBarProps) => {
               className="absolute inset-y-0 right-0 pr-3 flex items-center"
               onClick={() => setSearchQuery("")}
             >
-              <X className="h-5 w-5 text-gray-400 hover:text-gray-500" />
+              <X className="h-5 w-5 text-yellow-400 hover:text-yellow-500" />
             </button>
           )}
         </div>
 
         <div className="space-y-2">
-          <div className="flex items-center space-x-1 text-sm font-medium text-gray-500 dark:text-gray-400">
+          <div className="flex items-center space-x-1 text-sm font-medium text-yellow-400">
             <FilterIcon className="h-4 w-4" />
             <span>Platform Filters:</span>
           </div>
-          
           <div className="flex flex-wrap gap-3">
             {["Codeforces", "CodeChef", "LeetCode"].map((platform) => (
               <div key={platform} className="flex items-center space-x-2">
-                <Checkbox 
+                <Checkbox
                   id={`platform-${platform}`}
                   checked={filters.platforms.includes(platform)}
                   onCheckedChange={() => togglePlatform(platform)}
                 />
-                <label 
-                  htmlFor={`platform-${platform}`}
-                  className="text-sm font-medium cursor-pointer"
-                >
+                <label htmlFor={`platform-${platform}`} className="text-yellow-400">
                   {platform}
                 </label>
               </div>
@@ -106,33 +101,25 @@ const FilterBar = ({ filters, setFilters }: FilterBarProps) => {
         </div>
 
         <div className="space-y-2">
-          <div className="flex items-center space-x-1 text-sm font-medium text-gray-500 dark:text-gray-400">
+          <div className="flex items-center space-x-1 text-sm font-medium text-yellow-400">
             <span>Contest Status:</span>
           </div>
-          
           <Tabs defaultValue="all" className="w-full">
             <TabsList className="grid w-full grid-cols-3">
-              <TabsTrigger 
-                value="all" 
-                onClick={() => setFilters({ ...filters, status: [] })}
-                className={filters.status.length === 0 ? "bg-primary text-primary-foreground" : ""}
-              >
-                All
-              </TabsTrigger>
-              <TabsTrigger 
-                value="upcoming" 
-                onClick={() => setFilters({ ...filters, status: ["UPCOMING"] })}
-                className={filters.status.includes("UPCOMING") ? "bg-primary text-primary-foreground" : ""}
-              >
-                Upcoming
-              </TabsTrigger>
-              <TabsTrigger 
-                value="past" 
-                onClick={() => setFilters({ ...filters, status: ["PAST"] })}
-                className={filters.status.includes("PAST") ? "bg-primary text-primary-foreground" : ""}
-              >
-                Past
-              </TabsTrigger>
+              {[
+                { label: "All", value: [] },
+                { label: "Upcoming", value: ["UPCOMING"] },
+                { label: "Past", value: ["PAST"] }
+              ].map(({ label, value }) => (
+                <TabsTrigger
+                  key={label}
+                  value={label.toLowerCase()}
+                  onClick={() => setFilters({ ...filters, status: value })}
+                  className={filters.status.join() === value.join() ? "bg-yellow-400 text-black" : ""}
+                >
+                  {label}
+                </TabsTrigger>
+              ))}
             </TabsList>
           </Tabs>
         </div>
@@ -143,7 +130,7 @@ const FilterBar = ({ filters, setFilters }: FilterBarProps) => {
               variant="outline"
               size="sm"
               onClick={clearFilters}
-              className="text-red-500 border-red-200 hover:bg-red-50 hover:text-red-600"
+              className="text-yellow-400 border-yellow-400 hover:bg-yellow-500 hover:text-black"
             >
               Clear All Filters
             </Button>

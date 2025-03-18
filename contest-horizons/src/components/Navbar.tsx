@@ -32,7 +32,7 @@ const Navbar = () => {
           <Link to="/" className="flex items-center space-x-2">
             <Code2Icon className="h-8 w-8 text-yellow-400" />
             <span className="font-semibold text-xl tracking-tight text-white">
-              Contest Horizons
+              TLE UPDATES
             </span>
           </Link>
 

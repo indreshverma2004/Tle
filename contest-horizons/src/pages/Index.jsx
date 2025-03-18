@@ -155,7 +155,11 @@ function Contests(props) {
     <div className="min-h-screen bg-gray-50 dark:bg-gray-900">
       <Navbar />
       <div className="max-w-7xl mx-auto px-4 py-8" style={{marginTop:'50px'}}>
-        <h1 className="text-3xl font-bold mb-6">Competitive Programming Contests</h1>
+        <h1 className="text-3xl md:text-4xl font-extrabold text-center mb-6 text-black">
+  Your <span className="text-yellow-400 drop-shadow-md">Coding</span> Contests
+</h1>
+
+
         <FilterBar filters={filters} setFilters={setFilters} />
         {error && <div className="mb-6 p-4 bg-red-100 text-red-700 rounded-md">{error}</div>}
         <ContestList title="Upcoming Codeforces Contests" contests={filteredContests.codeforces.upcoming} loading={loading} platform="codeforces" emptyMessage="No upcoming Codeforces contests found." onBookmarkToggle={toggleBookmark} token={props.token} />

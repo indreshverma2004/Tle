@@ -15,7 +15,7 @@ const Home = () => {
             TLE Eliminators
           </h1>
           <h2 className="text-3xl md:text-5xl font-bold tracking-tight text-blue-400">
-            Track <span className="text-yellow-400">Competitive Programming</span> Contests
+            Track <span className="text-yellow-400">Your Coding</span> Contests
           </h2>
 
           <p className="text-lg md:text-xl text-gray-300 max-w-2xl mx-auto">

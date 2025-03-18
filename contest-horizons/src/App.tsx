@@ -7,7 +7,7 @@ import NotFound from "./pages/NotFound";
 import Login from "./pages/Login";
 import Signup from "./pages/Signup";
 import { useState } from "react";
-import AddYoutube from './pages/Addyoutoube.jsx'
+import AddYoutube from './pages/AddYoutube'
 
 const App = () => {
   const [token, setToken] = useState("");
@@ -21,7 +21,7 @@ const App = () => {
         <Route path="/bookmarks" element={<BookmarkedContests token={token} />} />
         <Route path="/login" element={<Login setToken={setToken} />} />
         <Route path="/signup" element={<Signup setToken={setToken} />} />
-        <Route path='/addyoutube_password12345' element={<AddYoutube contest={contest}></AddYoutube>}></Route>
+        <Route path='/addyoutube' element={<AddYoutube contest={contest}></AddYoutube>}></Route>
         <Route path="*" element={<NotFound />} />
       </Routes>
     </BrowserRouter>

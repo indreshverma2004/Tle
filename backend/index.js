@@ -9,9 +9,7 @@ const app = express();
 
 // Middleware
 app.use(cors());
-app.use(express.json()); // To parse JSON request bodies
-
-// Async function to connect to MongoDB and then start the server
+app.use(express.json()); 
 async function startServer() {
   try {
     await mongoose.connect(
@@ -19,13 +17,10 @@ async function startServer() {
       {
         useNewUrlParser: true,
         useUnifiedTopology: true,
-        // Optional: if you want to disable command buffering:
-        // bufferCommands: false
       }
     );
     console.log("✅ MongoDB Connected");
 
-    // Now start the server after the connection is established.
     const PORT = process.env.PORT || 5000;
     app.listen(PORT, () => {
       console.log(`🚀 Server running on http://localhost:${PORT}`);

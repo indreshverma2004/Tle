@@ -49,8 +49,8 @@ const Home = () => {
         </div>
       </div>
 
-      <footer className="py-6 border-t border-gray-700">
-        <div className="container mx-auto text-center text-gray-500">
+      <footer className="py-6 border-t border-white-700">
+        <div className="container mx-auto text-center text-gray-600">
           <p>© 2025 TLE Eliminators - Your Programming Contest Companion</p>
         </div>
       </footer>

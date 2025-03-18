@@ -43,7 +43,7 @@ const ContestList = ({
           "Content-Type": "application/json",
           Authorization: auth,
         },
-        body: JSON.stringify({ contest }), // Sending full contest object
+        body: JSON.stringify({ contest }),
       });
 
       const data = await response.json();
@@ -59,46 +59,45 @@ const ContestList = ({
     }
   };
 
-  // Select the appropriate component based on platform
-  const renderContest = (contest: any, index: number) => {
-    return (
-      <div
-        key={contest.id || index}
-        className="relative bg-gray-800 text-white p-4 rounded-lg shadow-lg transition-transform hover:scale-105"
-      >
-        {platform === "codeforces" && <CodeForcesCard contest={contest} />}
-        {platform === "codechef" && <CodeChefCard contest={contest} />}
-        {platform === "leetcode" &&
-          (contest.startsIn ? (
-            <LeetcodeUpcoming contest={contest} />
-          ) : (
-            <PastContestCard {...contest} />
-          ))}
+  // Enhanced UI for Contest Cards
+  const renderContest = (contest: any, index: number) => (
+    <div
+      key={contest.id || index}
+      className="relative p-4 rounded-xl shadow-lg bg-gradient-to-br from-gray-900 to-gray-800 text-white transition-transform hover:scale-105 hover:shadow-2xl"
+    >
+      {platform === "codeforces" && <CodeForcesCard contest={contest} />}
+      {platform === "codechef" && <CodeChefCard contest={contest} />}
+      {platform === "leetcode" &&
+        (contest.startsIn ? (
+          <LeetcodeUpcoming contest={contest} />
+        ) : (
+          <PastContestCard {...contest} />
+        ))}
 
-        {/* Bookmark Button */}
-        <button
-          className="absolute top-2 right-2 bg-yellow-400 text-gray-900 px-3 py-1 rounded-md hover:bg-yellow-500 transition"
-          onClick={() => handleBookmark(contest)}
-          disabled={!token}
-        >
-          Bookmark
-        </button>
-      </div>
-    );
-  };
+      {/* Bookmark Button */}
+      <button
+        className="absolute top-3 right-3 bg-yellow-400 text-gray-900 px-4 py-2 rounded-full hover:bg-yellow-500 transition-all"
+        onClick={() => handleBookmark(contest)}
+        disabled={!token}
+      >
+        Bookmark
+      </button>
+    </div>
+  );
 
   return (
-    <div className="mb-8">
-      <h2 className="text-2xl font-bold mb-4 text-yellow-400">{title}</h2>
-
+    <div className="mb-8 p-4 rounded-lg bg-gray-700">
+      <h2 className="text-3xl font-extrabold mb-6 text-yellow-400">{title}</h2>
       {loading ? (
         <ContestLoadingSkeleton />
       ) : contests.length > 0 ? (
-        <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-4">
+        <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-6">
           {contests.map((contest, index) => renderContest(contest, index))}
         </div>
       ) : (
-        <Card className="p-6 text-center text-gray-500 bg-gray-700">{emptyMessage}</Card>
+        <Card className="p-8 text-center text-gray-400 bg-gray-800">
+          {emptyMessage}
+        </Card>
       )}
     </div>
   );

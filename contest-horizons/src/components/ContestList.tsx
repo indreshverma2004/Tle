@@ -66,8 +66,8 @@ const ContestList = ({
   const renderContest = (contest: any, index: number) => {
     return (
       <div key={contest.id || index} className="relative">
-        {platform === "codeforces" && <CodeForcesCard contest={contest} />}
-        {platform === "codechef" && <CodeChefCard contest={contest} />}
+        {/* {platform === "codeforces" && <CodeForcesCard contest={contest} />} */}
+        {/* {platform === "codechef" && <CodeChefCard contest={contest} />} */}
         {platform === "leetcode" &&
           (contest.startsIn ? (
             <LeetcodeUpcoming contest={contest} />

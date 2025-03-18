@@ -36,7 +36,7 @@ const ContestList = ({
     }
 
     try {
-      const auth=token.slice(1,token.length-1);
+      const auth = token.slice(1, token.length - 1);
       const response = await fetch("http://localhost:5000/api/auth/bookmark", {
         method: "POST",
         headers: {
@@ -52,10 +52,7 @@ const ContestList = ({
         alert("Successfully bookmarked contest");
         console.log(`Successfully bookmarked contest:`, contest);
       } else {
-        console.error(
-          "Failed to bookmark contest:",
-          data.message || "Unknown error"
-        );
+        console.error("Failed to bookmark contest:", data.message || "Unknown error");
       }
     } catch (error) {
       console.error("Error while bookmarking contest:", error);
@@ -65,7 +62,10 @@ const ContestList = ({
   // Select the appropriate component based on platform
   const renderContest = (contest: any, index: number) => {
     return (
-      <div key={contest.id || index} className="relative">
+      <div
+        key={contest.id || index}
+        className="relative bg-gray-800 text-white p-4 rounded-lg shadow-lg transition-transform hover:scale-105"
+      >
         {platform === "codeforces" && <CodeForcesCard contest={contest} />}
         {platform === "codechef" && <CodeChefCard contest={contest} />}
         {platform === "leetcode" &&
@@ -77,9 +77,9 @@ const ContestList = ({
 
         {/* Bookmark Button */}
         <button
-          className="absolute top-2 right-2 bg-blue-500 text-white px-3 py-1 rounded-md hover:bg-blue-600 transition"
-          onClick={() => handleBookmark(contest)} // Pass full contest object
-          disabled={!token} // Disable button if token is not available
+          className="absolute top-2 right-2 bg-yellow-400 text-gray-900 px-3 py-1 rounded-md hover:bg-yellow-500 transition"
+          onClick={() => handleBookmark(contest)}
+          disabled={!token}
         >
           Bookmark
         </button>
@@ -89,7 +89,7 @@ const ContestList = ({
 
   return (
     <div className="mb-8">
-      <h2 className="text-2xl font-bold mb-4">{title}</h2>
+      <h2 className="text-2xl font-bold mb-4 text-yellow-400">{title}</h2>
 
       {loading ? (
         <ContestLoadingSkeleton />
@@ -98,7 +98,7 @@ const ContestList = ({
           {contests.map((contest, index) => renderContest(contest, index))}
         </div>
       ) : (
-        <Card className="p-6 text-center text-gray-500">{emptyMessage}</Card>
+        <Card className="p-6 text-center text-gray-500 bg-gray-700">{emptyMessage}</Card>
       )}
     </div>
   );

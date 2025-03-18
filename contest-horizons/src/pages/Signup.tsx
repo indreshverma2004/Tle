@@ -3,18 +3,10 @@ import { Link, useNavigate } from "react-router-dom";
 import { Button } from "@/components/ui/button";
 import { Input } from "@/components/ui/input";
 import { Label } from "@/components/ui/label";
-import {
-  Card,
-  CardContent,
-  CardDescription,
-  CardFooter,
-  CardHeader,
-  CardTitle,
-} from "@/components/ui/card";
+import { Card, CardContent, CardDescription, CardFooter, CardHeader, CardTitle } from "@/components/ui/card";
 import { Alert, AlertDescription } from "@/components/ui/alert";
 import { User, Mail, Lock, Phone, UserPlus, AlertCircle } from "lucide-react";
 
-// Define the UserType interface here since it's not being imported correctly
 interface UserType {
   name: string;
   email: string;
@@ -24,7 +16,6 @@ interface UserType {
 
 const saveContestsToStorage = (token: string) => {
   try {
-    // Use localStorage instead of cookies for reliable object storage
     localStorage.setItem("token", JSON.stringify(token));
     return true;
   } catch (err) {
@@ -67,36 +58,29 @@ const Signup = (props: { setToken: (token: string) => void }) => {
       const data = await response.json();
       if (data.success) {
         props.setToken(data.authToken);
-        console.log("Token received:", data.authToken);
         saveContestsToStorage(data.authToken);
-        navigate("/contests"); // Navigate to contests page
+        navigate("/contests");
       } else {
         setError(data.message || "Signup failed. Please try again.");
-        console.error("Signup failed");
       }
     } catch (error) {
       setError("Something went wrong. Please try again later.");
-      console.error("Error during signup:", error);
     } finally {
       setLoading(false);
     }
   };
 
   return (
-    <div className="min-h-screen flex items-center justify-center bg-gradient-to-br from-background to-secondary/30 p-4">
+    <div className="min-h-screen flex items-center justify-center bg-gradient-to-br from-gray-800 to-gray-600 p-4 text-white">
       <Card className="w-full max-w-md animate-fade-in shadow-lg">
         <CardHeader className="space-y-1">
           <div className="flex justify-center mb-2">
-            <div className="p-2 rounded-full bg-primary/10 text-primary">
+            <div className="p-2 rounded-full bg-yellow-400 text-gray-900">
               <UserPlus size={28} />
             </div>
           </div>
-          <CardTitle className="text-2xl font-bold text-center">
-            Create an Account
-          </CardTitle>
-          <CardDescription className="text-center">
-            Enter your details to join and participate in coding contests
-          </CardDescription>
+          <CardTitle className="text-2xl font-bold text-center">Create an Account</CardTitle>
+          <CardDescription className="text-center">Join us and participate in coding contests!</CardDescription>
         </CardHeader>
         <CardContent>
           {error && (
@@ -106,82 +90,35 @@ const Signup = (props: { setToken: (token: string) => void }) => {
             </Alert>
           )}
           <form onSubmit={handleSubmit} className="space-y-4">
-            <div className="space-y-2">
-              <Label htmlFor="name">Full Name</Label>
-              <div className="relative">
-                <User className="absolute left-3 top-1/2 -translate-y-1/2 text-muted-foreground h-4 w-4" />
-                <Input
-                  id="name"
-                  name="name"
-                  value={formData.name}
-                  onChange={handleChange}
-                  placeholder="John Doe"
-                  required
-                  className="pl-10"
-                />
+            {["name", "email", "password", "mobile"].map((field, idx) => (
+              <div key={idx} className="space-y-2">
+                <Label htmlFor={field}>{field.charAt(0).toUpperCase() + field.slice(1)}</Label>
+                <div className="relative">
+                  {field === 'name' && <User className="absolute left-3 top-1/2 -translate-y-1/2 text-gray-400 h-4 w-4" />}
+                  {field === 'email' && <Mail className="absolute left-3 top-1/2 -translate-y-1/2 text-gray-400 h-4 w-4" />}
+                  {field === 'password' && <Lock className="absolute left-3 top-1/2 -translate-y-1/2 text-gray-400 h-4 w-4" />}
+                  {field === 'mobile' && <Phone className="absolute left-3 top-1/2 -translate-y-1/2 text-gray-400 h-4 w-4" />}
+                  <Input
+                    id={field}
+                    name={field}
+                    value={formData[field as keyof UserType]}
+                    onChange={handleChange}
+                    placeholder={`Enter your ${field}`}
+                    required
+                    className="pl-10 bg-gray-800 text-white border-gray-600 focus:border-yellow-400"
+                    type={field === 'password' ? 'password' : 'text'}
+                  />
+                </div>
               </div>
-            </div>
-            <div className="space-y-2">
-              <Label htmlFor="email">Email</Label>
-              <div className="relative">
-                <Mail className="absolute left-3 top-1/2 -translate-y-1/2 text-muted-foreground h-4 w-4" />
-                <Input
-                  id="email"
-                  type="email"
-                  name="email"
-                  value={formData.email}
-                  onChange={handleChange}
-                  placeholder="john.doe@example.com"
-                  required
-                  className="pl-10"
-                />
-              </div>
-            </div>
-            <div className="space-y-2">
-              <Label htmlFor="password">Password</Label>
-              <div className="relative">
-                <Lock className="absolute left-3 top-1/2 -translate-y-1/2 text-muted-foreground h-4 w-4" />
-                <Input
-                  id="password"
-                  type="password"
-                  name="password"
-                  value={formData.password}
-                  onChange={handleChange}
-                  placeholder="••••••••"
-                  required
-                  className="pl-10"
-                />
-              </div>
-            </div>
-            <div className="space-y-2">
-              <Label htmlFor="mobile">Mobile</Label>
-              <div className="relative">
-                <Phone className="absolute left-3 top-1/2 -translate-y-1/2 text-muted-foreground h-4 w-4" />
-                <Input
-                  id="mobile"
-                  name="mobile"
-                  value={formData.mobile}
-                  onChange={handleChange}
-                  placeholder="+1 (555) 123-4567"
-                  required
-                  className="pl-10"
-                />
-              </div>
-            </div>
-            <Button type="submit" className="w-full" disabled={loading}>
+            ))}
+            <Button type="submit" className="w-full bg-yellow-400 text-gray-900 hover:bg-yellow-500" disabled={loading}>
               {loading ? "Creating Account..." : "Create Account"}
             </Button>
           </form>
         </CardContent>
-        <CardFooter className="flex justify-center border-t pt-4">
-          <p className="text-sm text-muted-foreground">
-            Already have an account?{" "}
-            <Link
-              to="/login"
-              className="text-primary font-medium hover:underline"
-            >
-              Login
-            </Link>
+        <CardFooter className="flex justify-center border-t border-gray-700 pt-4">
+          <p className="text-sm text-gray-400">
+            Already have an account? <Link to="/login" className="text-yellow-400 hover:text-yellow-500">Login</Link>
           </p>
         </CardFooter>
       </Card>

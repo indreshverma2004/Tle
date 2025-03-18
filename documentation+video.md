@@ -1,5 +1,5 @@
 # Contest Tracker Application Documentation
-[Working Demo ](https://youtu.be/lHCGH6J84bU?si=9atBnUfHP6b4w20a)
+[Working Demo ](https://youtu.be/WDw2EdsQS98?si=HG-4-t7Jfkf6IcyU)
 ## Table of Contents
 1. [Tech Stack](#tech-stack)
 2. [Application Flow](#application-flow)
@@ -33,29 +33,6 @@ This application is built using the following technologies:
 - **Authentication**: JSON Web Token (JWT)
 - **Scraping**: Puppeteer for extracting contest data
 
-## Application Flow
-
-```
-┌─────────────────┐     ┌─────────────────┐     ┌─────────────────┐
-│                 │     │                 │     │                 │
-│  User Interface │     │  React Components│     │  Backend APIs   │
-│                 │     │                 │     │                 │
-└────────┬────────┘     └────────┬────────┘     └────────┬────────┘
-         │                       │                       │
-         ▼                       ▼                       ▼
-┌─────────────────┐     ┌─────────────────┐     ┌─────────────────┐
-│                 │     │                 │     │                 │
-│  User Actions   │────▶│  State Updates  │────▶│  API Requests   │
-│                 │     │                 │     │                 │
-└─────────────────┘     └─────────────────┘     └─────────────────┘
-                                                         │
-                                                         ▼
-┌─────────────────┐     ┌─────────────────┐     ┌─────────────────┐
-│                 │     │                 │     │                 │
-│  UI Updates     │◀────│  State Changes  │◀────│  API Responses  │
-│                 │     │                 │     │                 │
-└─────────────────┘     └─────────────────┘     └─────────────────┘
-```
 
 ## Key Components
 
